@@ -3,6 +3,7 @@ import { useFishesStore } from '@/stores/fishes';
 import { useAchievementsStore } from '@/stores/achievements';
 import { useHolesStore } from '@/stores/holes';
 import { useBaitsStore } from '@/stores/baits';
+import { useGW2Store } from '@/stores/gw2data';
 import type { Achievement } from '@/types/achievement.type';
 import type { Bait } from '@/types/bait.type';
 import type { Hole } from '@/types/hole.type';
@@ -20,8 +21,10 @@ const fishesStore = useFishesStore();
 const achievementsStore = useAchievementsStore();
 const holesStore = useHolesStore();
 const baitsStore = useBaitsStore();
+const GW2Store = useGW2Store();
 
 const loadFishes = () => {
+  console.log(baitFilter.value);
   fishList.value = fishesStore.getFilteredFishes(
     achievementFilter.value?.id,
     holeFilter.value?.id,
@@ -36,6 +39,7 @@ onMounted(async () => {
   await achievementsStore.loadAchievementsData();
   await holesStore.loadHolesData();
   await baitsStore.loadBaitsData();
+  await GW2Store.loadGW2Data();
   fishList.value = fishesStore.fishesList;
   holesList.value = holesStore.holesList;
   baitsList.value = baitsStore.baitsList;
@@ -55,7 +59,7 @@ onMounted(async () => {
         {{ hole.name }}
       </option>
     </select>
-    <select v-model="achievementFilter" @change="loadFishes">
+    <select v-model="baitFilter" @change="loadFishes">
       <option :value="null">&nbsp;-&nbsp;</option>
       <option v-for="bait of baitsList" :key="bait.itemId" :value="bait">
         {{ bait.name }}

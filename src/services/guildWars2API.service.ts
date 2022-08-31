@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-export const baseUrl: string = import.meta.env.VITE_APP_API_URL || 'https://gw2fishing.an-d.me/api/fr';
+export const baseUrl: string = import.meta.env.VITE_APP_API_URL || 'https://api.guildwars2.com/v2';
 export const uploadUri = `${baseUrl}cards/upload`;
 export const importUri = `${baseUrl}cards/import`;
 
-class HttpRequestService {
-  async get(path: string, queryParams = {}, bodyParams = {}): Promise<any> {
+class GW2APIRequestService {
+  async get(path: string, queryParams: any = {}, bodyParams: any = {}): Promise<any> {
+    queryParams.access_token = 'B6FB7742-2993-F84F-A037-CEFD827E6A23B7331DD5-7016-4711-9544-A7ECF835E87A';
     const axiosConfig = {
       params: queryParams,
       // data: bodyParams,
@@ -69,4 +70,4 @@ class HttpRequestService {
   }
 }
 
-export default new HttpRequestService();
+export default new GW2APIRequestService();
